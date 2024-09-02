@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { iven_products } from '@prisma/client'
-import { ref, onBeforeMount } from 'vue'
 
 const products = ref<iven_products[]>([])
 
@@ -11,7 +10,8 @@ async function fetchProducts() {
       products.value = response
       localStorage.setItem('products', JSON.stringify(response))
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.error(error)
   }
 }
@@ -36,7 +36,7 @@ onBeforeMount(() => {
     <div style="display: flex; align-items: center;">
       <h2 style="padding-right: 10px;">
         Существующие товары:
-      </h2> 
+      </h2>
       <button
         style="height: fit-content;"
         @click="fetchProducts"
@@ -44,7 +44,10 @@ onBeforeMount(() => {
         Обновить
       </button>
     </div>
-    <div v-for="product in products" :key="product.productID">
+    <div
+      v-for="product in products"
+      :key="product.productID"
+    >
       <NuxtLink
         :to="`/p/${product?.uri?.endsWith('.html') ? product.uri.slice(0, -5).toLocaleLowerCase() : product.uri?.toLocaleLowerCase()}`"
       >
