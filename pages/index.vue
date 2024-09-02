@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { iven_products } from '@prisma/client'
+import { ref, onBeforeMount } from 'vue'
 
 const products = ref<iven_products[]>([])
 
@@ -8,14 +9,26 @@ async function fetchProducts() {
     const response = await $fetch<iven_products[]>('/api/products')
     if (response) {
       products.value = response
+      localStorage.setItem('products', JSON.stringify(response))
     }
-  }
-  catch (error) {
+  } catch (error) {
     console.error(error)
   }
 }
 
-onBeforeMount(fetchProducts)
+function loadProductsFromLocalStorage() {
+  const storedProducts = localStorage.getItem('products')
+  if (storedProducts) {
+    products.value = JSON.parse(storedProducts)
+  }
+}
+
+onBeforeMount(() => {
+  loadProductsFromLocalStorage()
+  if (products.value.length === 0) {
+    fetchProducts()
+  }
+})
 </script>
 
 <template>
@@ -23,7 +36,8 @@ onBeforeMount(fetchProducts)
     <div style="display: flex; align-items: center;">
       <h2 style="padding-right: 10px;">
         Существующие товары:
-      </h2> <button
+      </h2> 
+      <button
         style="height: fit-content;"
         @click="fetchProducts"
       >
