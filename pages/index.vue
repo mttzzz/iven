@@ -2,7 +2,7 @@
     <h2> Существующие товары:</h2>
     <div v-for="product in products" :key="product.productID">
 
-        <NuxtLink :to="`/p/${product.uri}`">
+        <NuxtLink :to="`/p/${product?.uri?.endsWith('.html') ? product.uri.slice(0, -5) : product.uri}`">
             <div>{{ product.name }}</div>
         </NuxtLink>
     </div>
