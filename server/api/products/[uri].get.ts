@@ -1,5 +1,3 @@
-import type { iven_products } from '@prisma/client'
-
 export default defineEventHandler(async (event) => {
   const prisma = event.context.prisma
   const uri = getRouterParam(event, 'uri')
@@ -9,5 +7,10 @@ export default defineEventHandler(async (event) => {
   }
 
   const modifiedUri = uri?.endsWith('.html') ? uri : `${uri}.html`
-  return await prisma.iven_products.findUnique({ where: { uri: modifiedUri } })
+  return await prisma.iven_products.findUnique({ where: { uri: modifiedUri }, select: {
+    productID: true,
+    name: true,
+    uri: true,
+    description: true,
+  } })
 })
