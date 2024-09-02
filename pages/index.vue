@@ -1,5 +1,9 @@
 <template>
-    <h2> Существующие товары:</h2>
+    <div style="display: flex; align-items: center;">
+        <h2 style="padding-right: 10px;"> Существующие товары:</h2> <button style="height: fit-content;"
+            @click="fetchProducts">Обновить</button>
+
+    </div>
     <div v-for="product in products" :key="product.productID">
 
         <NuxtLink
@@ -18,16 +22,16 @@ import type { iven_products } from '@prisma/client';
 
 const products = ref<iven_products[]>([])
 
-try {
-    const response = await $fetch<iven_products[]>('/api/products')
-    if (response) {
-        products.value = response
+async function fetchProducts() {
+    try {
+        const response = await $fetch<iven_products[]>('/api/products')
+        if (response) {
+            products.value = response
+        }
+    } catch (error) {
+        console.error(error)
     }
-} catch (error) {
-    console.error(error)
 }
 
-
-
-
+onBeforeMount(fetchProducts)
 </script>
