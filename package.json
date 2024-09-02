@@ -1,7 +1,8 @@
 {
   "name": "nuxt-app",
-  "private": true,
   "type": "module",
+  "private": true,
+  "packageManager": "pnpm@8.8.0+sha1.9922e8b650d393700209ccd81e0ebdbcbe43b0d3",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -16,8 +17,8 @@
     "nuxt": "^3.13.0",
     "vue": "latest"
   },
-  "packageManager": "pnpm@8.8.0+sha1.9922e8b650d393700209ccd81e0ebdbcbe43b0d3",
   "devDependencies": {
+    "@antfu/eslint-config": "^3.0.0",
     "@nuxt/eslint": "^0.5.5",
     "eslint": "^9.9.1",
     "prisma": "^5.19.0",

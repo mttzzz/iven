@@ -1,8 +1,8 @@
-<template>
-    <div/>
-</template>
-
 <script setup lang="ts">
 const route = useRoute()
-navigateTo('/p/' + route.params.uri)
+navigateTo(`/p/${route.params.uri}`)
 </script>
+
+<template>
+  <div />
+</template>
