@@ -1,8 +1,8 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
     <div v-if="product">
         <h1 class="mb-10 max-w-[900px]">{{ product.name }}</h1>
-        <div v-html="product.description">
-        </div>
+        <div v-html="product.description"/>
     </div>
     <div v-else>
         товар не найден

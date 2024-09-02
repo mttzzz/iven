@@ -7,7 +7,9 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare && prisma generate"
+    "postinstall": "nuxt prepare && prisma generate",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@prisma/client": "5.19.0",
@@ -16,6 +18,9 @@
   },
   "packageManager": "pnpm@8.8.0+sha1.9922e8b650d393700209ccd81e0ebdbcbe43b0d3",
   "devDependencies": {
-    "prisma": "^5.19.0"
+    "@nuxt/eslint": "^0.5.5",
+    "eslint": "^9.9.1",
+    "prisma": "^5.19.0",
+    "typescript": "^5.5.4"
   }
 }

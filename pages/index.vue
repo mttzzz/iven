@@ -1,11 +1,12 @@
 <template>
+  <div>
     <div style="display: flex; align-items: center;">
-        <h2 style="padding-right: 10px;"> Существующие товары:</h2> <button style="height: fit-content;"
+        <h2 style="padding-right: 10px;"> Существующие товары:</h2> <button
+style="height: fit-content;"
             @click="fetchProducts">Обновить</button>
 
     </div>
     <div v-for="product in products" :key="product.productID">
-
         <NuxtLink
             :to="`/p/${product?.uri?.endsWith('.html') ? product.uri.slice(0, -5).toLocaleLowerCase() : product.uri?.toLocaleLowerCase()}`">
             <div>{{ product.name }}</div>
@@ -15,6 +16,7 @@
     <NuxtLink :to="`/p/112323423452344562345`">
         <div>112323423452344562345</div>
     </NuxtLink>
+  </div>
 </template>
 
 <script setup lang="ts">

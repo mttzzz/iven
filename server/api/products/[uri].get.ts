@@ -1,4 +1,4 @@
-import { iven_products } from "@prisma/client"
+import type { iven_products } from "@prisma/client"
 
 
 
