@@ -7,7 +7,10 @@ async function fetchProducts() {
   try {
     const response = await $fetch<iven_products[]>('/api/products')
     if (response) {
-      products.value = response
+      products.value = response.map(product => ({
+        ...product,
+        uri: product?.uri?.endsWith('.html') ? product.uri.slice(0, -5) : product.uri,
+      }))
       localStorage.setItem('products', JSON.stringify(response))
     }
   }
@@ -19,11 +22,14 @@ async function fetchProducts() {
 function loadProductsFromLocalStorage() {
   const storedProducts = localStorage.getItem('products')
   if (storedProducts) {
-    products.value = JSON.parse(storedProducts)
+    products.value = (JSON.parse(storedProducts) as iven_products[]).map(product => ({
+      ...product,
+      uri: product?.uri?.endsWith('.html') ? product.uri.slice(0, -5) : product.uri,
+    }))
   }
 }
 
-onBeforeMount(() => {
+onMounted(() => {
   loadProductsFromLocalStorage()
   if (products.value.length === 0) {
     fetchProducts()
@@ -49,14 +55,14 @@ onBeforeMount(() => {
       :key="product.productID"
     >
       <NuxtLink
-        :to="`/p/${product?.uri?.endsWith('.html') ? product.uri.slice(0, -5).toLocaleLowerCase() : product.uri?.toLocaleLowerCase()}`"
+        :to="`/p/${product?.uri}`"
       >
         <div>{{ product.name }}</div>
       </NuxtLink>
     </div>
     <h2>Несуществующие товары</h2>
-    <NuxtLink to="/p/112323423452344562345">
-      <div>112323423452344562345</div>
+    <NuxtLink to="/p/fake-product">
+      <div>Fake Product</div>
     </NuxtLink>
   </div>
 </template>
