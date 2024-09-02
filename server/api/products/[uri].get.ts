@@ -9,6 +9,5 @@ export default defineEventHandler(async (event) => {
   }
 
   const modifiedUri = uri?.endsWith('.html') ? uri : `${uri}.html`
-  const product = await prisma.iven_products.findUnique({ where: { uri: modifiedUri } })
-  return product as iven_products
+  return await prisma.iven_products.findUnique({ where: { uri: modifiedUri } })
 })
