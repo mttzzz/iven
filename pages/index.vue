@@ -3,13 +3,17 @@ import type { iven_products } from '@prisma/client'
 
 const products = ref<iven_products[]>([])
 
+function modifyUri(uri: string | null) {
+  return uri?.endsWith('.html') ? uri.slice(0, -5) : uri
+}
+
 async function fetchProducts() {
   try {
     const response = await $fetch<iven_products[]>('/api/products')
     if (response) {
       products.value = response.map(product => ({
         ...product,
-        uri: product?.uri?.endsWith('.html') ? product.uri.slice(0, -5) : product.uri,
+        uri: modifyUri(product.uri),
       }))
       localStorage.setItem('products', JSON.stringify(response))
     }
@@ -24,7 +28,7 @@ function loadProductsFromLocalStorage() {
   if (storedProducts) {
     products.value = (JSON.parse(storedProducts) as iven_products[]).map(product => ({
       ...product,
-      uri: product?.uri?.endsWith('.html') ? product.uri.slice(0, -5) : product.uri,
+      uri: modifyUri(product.uri),
     }))
   }
 }
