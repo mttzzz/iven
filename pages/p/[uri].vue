@@ -24,7 +24,7 @@ const { data: product } = useFetch(`/api/products/${route.params.uri}`, {
 </script>
 
 <template>
-  <div v-if="product">
+  <div v-if="product?.productID">
     <h1>
       {{ product.name }}
     </h1>
