@@ -3,9 +3,9 @@ const nuxtApp = useNuxtApp()
 const route = useRoute()
 const { data: product } = useFetch(`/api/products/${route.params.uri}`, {
   key: `product-${route.params.uri}`,
-  transform: (data) => {
+  transform: (product) => {
     return {
-      ...data,
+      ...product,
       fetchedAt: new Date(),
     }
   },
