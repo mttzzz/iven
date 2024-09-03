@@ -3,6 +3,9 @@ import withNuxt from './.nuxt/eslint.config.mjs'
 
 export default withNuxt(
   antfu({
+    typescript: {
+      tsconfigPath: './tsconfig.json',
+    },
     rules: {
       'vue/max-attributes-per-line': ['error', {
         singleline: {

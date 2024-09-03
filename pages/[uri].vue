@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const route = useRoute()
-navigateTo(`/p/${route.params.uri}`)
+const route = useRoute('uri')
+navigateTo({ name: 'p-uri', params: { uri: route.params.uri } })
 </script>
 
 <template>

@@ -35,7 +35,7 @@ const { data: products, refresh, status } = useFetch('/api/products', {
       :key="product.productID"
     >
       <NuxtLink
-        :to="`/p/${product?.uri}`"
+        :to="{ name: 'p-uri', params: { uri: product.uri ?? '' } }"
       >
         {{ product.name }}
       </NuxtLink>

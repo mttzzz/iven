@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const nuxtApp = useNuxtApp()
-const route = useRoute()
+const route = useRoute('p-uri')
 const { data: product, status } = useFetch(`/api/products/${route.params.uri}`, {
   key: `product-${route.params.uri}`,
   transform: (product) => {
