@@ -4,7 +4,15 @@ const route = useRoute()
 const { data: product } = useFetch(`/api/products/${route.params.uri}`, {
   key: `product-${route.params.uri}`,
   getCachedData(key) {
-    return nuxtApp.payload.data[key] || nuxtApp.static.data[key]
+    const data = nuxtApp.payload.data[key] || nuxtApp.static.data[key]
+    if (!data)
+      return
+    const expirationDate = new Date(data.fetchedAt)
+    expirationDate.setTime(expirationDate.getTime() + 1000 * 60) // 60 sec
+    const isExpired = expirationDate < new Date()
+    if (isExpired)
+      return
+    return data
   },
 })
 </script>
