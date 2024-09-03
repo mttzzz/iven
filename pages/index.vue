@@ -1,55 +1,26 @@
 <script setup lang="ts">
-import type { iven_products } from '@prisma/client'
-
-const products = ref<iven_products[]>([])
-
-function modifyUri(uri: string | null) {
-  return uri?.endsWith('.html') ? uri.slice(0, -5) : uri
-}
-
-async function fetchProducts() {
-  try {
-    const response = await $fetch<iven_products[]>('/api/products')
-    if (response) {
-      products.value = response.map(product => ({
+const { data: products, refresh, status } = useFetch('/api/products', {
+  transform: (data) => {
+    return data.map((product) => {
+      return {
         ...product,
         uri: modifyUri(product.uri),
-      }))
-      localStorage.setItem('products', JSON.stringify(response))
-    }
-  }
-  catch (error) {
-    console.error(error)
-  }
-}
-
-function loadProductsFromLocalStorage() {
-  const storedProducts = localStorage.getItem('products')
-  if (storedProducts) {
-    products.value = (JSON.parse(storedProducts) as iven_products[]).map(product => ({
-      ...product,
-      uri: modifyUri(product.uri),
-    }))
-  }
-}
-
-onMounted(() => {
-  loadProductsFromLocalStorage()
-  if (products.value.length === 0) {
-    fetchProducts()
-  }
+      }
+    })
+  },
 })
 </script>
 
 <template>
   <div>
+    <h2>Status: {{ status }}</h2>
     <div style="display: flex; align-items: center;">
       <h2 style="padding-right: 10px;">
         Существующие товары:
       </h2>
       <button
         style="height: fit-content;"
-        @click="fetchProducts"
+        @click="refresh()"
       >
         Обновить
       </button>
