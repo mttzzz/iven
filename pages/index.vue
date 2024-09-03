@@ -3,17 +3,7 @@ const nuxtApp = useNuxtApp()
 
 const { data: products, refresh, status } = useFetch('/api/products', {
   key: 'products',
-  getCachedData(key) {
-    const data = nuxtApp.payload.data[key] || nuxtApp.static.data[key]
-    if (!data)
-      return
-    const expirationDate = new Date(data.fetchedAt)
-    expirationDate.setTime(expirationDate.getTime() + 1000 * 60) // 60 sec
-    const isExpired = expirationDate < new Date()
-    if (isExpired)
-      return
-    return data
-  },
+  getCachedData: key => cacheFunction(nuxtApp, key, 60),
   transform: (data) => {
     return data.map((product) => {
       return {
