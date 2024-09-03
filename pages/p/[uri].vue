@@ -3,6 +3,12 @@ const nuxtApp = useNuxtApp()
 const route = useRoute()
 const { data: product } = useFetch(`/api/products/${route.params.uri}`, {
   key: `product-${route.params.uri}`,
+  transform: (data) => {
+    return {
+      ...data,
+      fetchedAt: new Date(),
+    }
+  },
   getCachedData(key) {
     const data = nuxtApp.payload.data[key] || nuxtApp.static.data[key]
     if (!data)
