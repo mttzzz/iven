@@ -1,5 +1,11 @@
 <script setup lang="ts">
+const nuxtApp = useNuxtApp()
+
 const { data: products, refresh, status } = useFetch('/api/products', {
+  key: 'products',
+  getCachedData(key) {
+    return nuxtApp.payload.data[key] || nuxtApp.static.data[key]
+  },
   transform: (data) => {
     return data.map((product) => {
       return {
@@ -32,12 +38,12 @@ const { data: products, refresh, status } = useFetch('/api/products', {
       <NuxtLink
         :to="`/p/${product?.uri}`"
       >
-        <div>{{ product.name }}</div>
+        {{ product.name }}
       </NuxtLink>
     </div>
     <h2>Несуществующие товары</h2>
     <NuxtLink to="/p/fake-product">
-      <div>Fake Product</div>
+      Fake Product
     </NuxtLink>
   </div>
 </template>

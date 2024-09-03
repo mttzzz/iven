@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import type { iven_products } from '@prisma/client'
-
+const nuxtApp = useNuxtApp()
 const route = useRoute()
-const product = ref<null | iven_products>(null)
-
-const response = await $fetch<iven_products>(`/api/products/${route.params.uri}`)
-if (response?.productID) {
-  product.value = response
-}
+const { data: product } = useFetch(`/api/products/${route.params.uri}`, {
+  key: `product-${route.params.uri}`,
+  getCachedData(key) {
+    return nuxtApp.payload.data[key] || nuxtApp.static.data[key]
+  },
+})
 </script>
 
 <template>
